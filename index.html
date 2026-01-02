@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kopi Santai - Santai Ngopi, Nikmati Hari</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="home-page">
+
+<!-- HEADER -->
+<header>
+  <div class="logo">☕ Kopi Santai</div>
+  <nav>
+
+    <a href="#" id="navHome" onclick="showPage('home')">Beranda</a>
+
+    <a href="#" id="navMenu" onclick="showPage('menu')">Menu</a>
+    <a href="#" id="navRecommendation" onclick="showPage('recommendation')">Rekomendasi</a>
+
+    <div class="cart-icon" id="navCart" onclick="toggleCart()">
+      🛒 <span class="cart-badge" id="cartBadge">0</span>
+    </div>
+
+    <a href="#" id="navDashboard" class="hidden" onclick="showPage('admin')">Dashboard</a>
+    <a href="#" id="navStock" class="hidden" onclick="showPage('admin')">Manajemen Stok</a>
+
+    <div class="user-icon" id="navUser" onclick="showPage('auth')">👤</div>
+    <a href="#" id="navLogout" class="hidden" onclick="logout()">Logout</a>
+
+  </nav>
+</header>
+
+<!-- HOME -->
+<div id="homePage">
+    <section class="hero">
+        <h1>Santai Ngopi, Nikmati Hari</h1>
+        <p>Kopi lokal pilihan dengan cita rasa istimewa</p>
+        <div class="cta-buttons">
+            <button class="btn btn-primary" onclick="showPage('menu')">Lihat Menu</button>
+            <button class="btn btn-secondary" onclick="openCustomModal()">Custom Kopi</button>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Kenapa Kopi Santai?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">☕</div>
+                <h3>100% Lokal</h3>
+                <p>Kopi pilihan dari petani lokal Indonesia</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Custom Sesuai Selera</h3>
+                <p>Atur level kopi, gula, dan suhu sesukamu</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">😊</div>
+                <h3>Rekomendasi Mood</h3>
+                <p>Temukan kopi yang cocok dengan suasana hatimu</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-bottom">
+        <h2>Siap Menikmati Kopi Santai?</h2>
+        <p>Pesan sekarang dan rasakan pengalaman ngopi yang berbeda!</p>
+        <button class="cta-bottom-btn btn" onclick="showPage('menu')">
+            Pesan Sekarang
+        </button>
+    </section>
+</div>
+
+<!-- MENU -->
+<div id="menuPage" class="hidden">
+  <section class="menu-section">
+    <div class="section-header">
+      <h2>Menu Kopi Kami</h2>
+      <p class="section-subtitle">
+        Pilih kopi favorit atau custom sesuai seleramu
+      </p>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </section>
+</div>
+
+
+<!-- RECOMMENDATION -->
+<div id="recommendationPage" class="hidden">
+  <section class="recommendation">
+    <div class="section-header">
+      <h2>Rekomendasi Sesuai Mood</h2>
+      <p class="section-subtitle">
+        Temukan kopi yang cocok dengan suasana hatimu hari ini
+      </p>
+    </div>
+    <div class="mood-grid" id="moodGrid"></div>
+  </section>
+</div>
+
+
+<!-- AUTH -->
+<div id="authPage" class="hidden">
+  <div class="auth-wrapper">
+
+    <div class="auth-header">
+      <div class="auth-logo">☕ Kopi Santai</div>
+      <p>Masuk atau daftar untuk melanjutkan</p>
+    </div>
+
+    <div class="auth-card">
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab('login')">Masuk</button>
+        <button class="auth-tab" onclick="switchTab('register')">Daftar</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <label>Email</label>
+        <input type="email" placeholder="email@example.com">
+
+        <label>Password</label>
+        <input type="password" placeholder="••••••••">
+
+        <button class="auth-btn">Masuk</button>
+      </form>
+
+      <form id="registerForm" class="auth-form hidden">
+        <label>Nama Lengkap</label>
+        <input type="text" placeholder="Nama Anda">
+
+        <label>Email</label>
+        <input type="email" placeholder="email@example.com">
+
+        <label>Password</label>
+        <input type="password" placeholder="••••••••">
+
+        <button class="auth-btn">Daftar</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPage" class="hidden">
+    <div class="dashboard">
+        <h1>Dashboard Admin</h1>
+        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<!-- CART -->
+<div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+        <h2>Keranjang</h2>
+        <span class="close-modal" onclick="toggleCart()">&times;</span>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotal">Rp 0</span>
+        </div>
+        <button class="btn btn-primary" onclick="openCheckout()">
+        Checkout
+        </button>
+    </div>
+</div>
+
+<div id="customModal" class="modal">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2>Custom Kopi</h2>
+      <span class="close-modal" onclick="closeCustomModal()">×</span>
+    </div>
+
+    <p><strong>Kopi Custom</strong><br>Buat kopi sesuai seleramu</p>
+
+    <div class="option-group level">
+    <button data-value="Soft" onclick="setLevel('Soft')">Soft</button>
+    <button data-value="Medium" class="active" onclick="setLevel('Medium')">Medium</button>
+    <button data-value="Strong" onclick="setLevel('Strong')">Strong</button>
+    </div>
+
+    <div class="option-group temp">
+    <button data-value="Hot" class="active" onclick="setTemp('Hot')">🔥 Hot</button>
+    <button data-value="Ice" onclick="setTemp('Ice')">❄ Ice</button>
+    </div>
+
+    <label>Level Gula: <span id="sugarValue">50</span>%</label>
+    <input type="range" min="0" max="100" value="50"
+    oninput="custom.sugar=this.value; updateCustomUI()">
+
+    <div class="custom-option">
+    <label>4. Catatan Khusus <span class="optional">(Opsional)</span></label>
+
+    <div class="note-box">
+        <textarea id="customNote" rows="3"
+        placeholder="Contoh: less ice, extra shot, tanpa gula, dll"></textarea>
+
+        <div class="note-hint">
+        💡 Barista akan membaca catatan ini
+        </div>
+    </div>
+    </div>
+
+    <label>Jumlah</label>
+    <div class="qty">
+      <button onclick="changeQty(-1)">−</button>
+      <span id="qty">1</span>
+      <button onclick="changeQty(1)">+</button>
+    </div>
+
+    <p><strong>Total: <span id="customTotal">Rp 15.000</span></strong></p>
+
+    <button class="btn btn-primary" onclick="addCustomToCart()">Tambah ke Keranjang</button>
+  </div>
+</div>
+
+<div id="checkoutModal" class="modal">
+  <div class="modal-content checkout-modal">
+
+    <div class="modal-header">
+      <h2>Pilih Metode Pembayaran</h2>
+      <span class="close-modal" onclick="closeCheckout()">✕</span>
+    </div>
+
+    <div class="payment-list">
+
+      <div class="payment-item active" onclick="selectCheckoutPayment(this, 'qris')">
+        <div class="payment-left">
+            <span class="payment-icon">💳</span>
+            <div>
+            <strong>E-Wallet / QRIS</strong>
+            <p>GoPay, OVO, Dana, ShopeePay, dll</p>
+            </div>
+        </div>
+        <input type="radio" name="payment" checked>
+        </div>
+
+        <div class="payment-item" onclick="selectCheckoutPayment(this, 'cash')">
+        <div class="payment-left">
+            <span class="payment-icon">💵</span>
+            <div>
+            <strong>Tunai</strong>
+            <p>Bayar saat pesanan diterima</p>
+            </div>
+        </div>
+        <input type="radio" name="payment">
+        </div>
+    </div>
+
+    <div id="checkoutQR" class="qr-box">
+      <h3>Scan QRIS untuk membayar</h3>
+
+      <div class="qr-placeholder">
+        <span>QRIS Code</span>
+      </div>
+
+      <p class="qr-hint">
+        Scan dengan aplikasi e-wallet favorit Anda
+      </p>
+    </div>
+
+    <div class="checkout-footer">
+      <div class="checkout-total">
+        <span>Total</span>
+        <strong id="checkoutTotal">Rp 0</strong>
+      </div>
+
+      <button class="btn btn-primary" onclick="confirmCheckout()">
+        Konfirmasi Pembayaran
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
